@@ -25,20 +25,25 @@ function App() {
         );
 
   return (
-    <div className=" ">
-      <h1 className="text-2xl font-bold w-full flex items-center justify-center pt-8 pb-8 bg-black text-white shadow-2xl">Loan Calculator</h1>
-      <div className="flex">
-        <div className="flex flex-row">
-          <div className="p-4 space-y-6">
+    <div className="bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold w-full flex items-center justify-center pt-8 pb-8 bg-black text-white shadow-2xl">
+        Loan Calculator
+      </h1>
+
+      <div className="flex flex-col md:flex-row p-4 gap-6">
+        {/* Input Section */}
+        <div className="flex-1">
+          <div className="space-y-6">
+
             {/* Home Value */}
-            <div className="w-[40vw] border-2 p-4 rounded">
+            <div className="w-full md:w-[40vw] border-2 p-4 rounded shadow-lg bg-white transition-all duration-300 ease-in-out hover:shadow-2xl">
               <h3 className="font-semibold mb-2">Home Value</h3>
               <h1 className="flex items-center text-xl font-medium mb-2">
                 <FaRupeeSign className="mr-1" />
                 {data.homeValue}
               </h1>
               <input
-                className="w-full"
+                className="w-full transition duration-300"
                 type="range"
                 min={1000}
                 max={10000}
@@ -47,7 +52,7 @@ function App() {
                   setData({ ...data, homeValue: Number(e.target.value) })
                 }
               />
-              <div className="flex justify-between mt-2">
+              <div className="flex justify-between mt-2 text-sm">
                 <span className="flex items-center">
                   <FaRupeeSign className="mr-1" /> 1000
                 </span>
@@ -58,14 +63,14 @@ function App() {
             </div>
 
             {/* Down Payment */}
-            <div className="w-[40vw] border-2 p-4 rounded">
+            <div className="w-full md:w-[40vw] border-2 p-4 rounded shadow-lg bg-white transition-all duration-300 ease-in-out hover:shadow-2xl">
               <h3 className="font-semibold mb-2">Down Payment</h3>
               <h1 className="flex items-center text-xl font-medium mb-2">
                 <FaRupeeSign className="mr-1" />
                 {data.downPayment}
               </h1>
               <input
-                className="w-full"
+                className="w-full transition duration-300"
                 type="range"
                 min={0}
                 max={data.homeValue}
@@ -74,7 +79,7 @@ function App() {
                   setData({ ...data, downPayment: Number(e.target.value) })
                 }
               />
-              <div className="flex justify-between mt-2">
+              <div className="flex justify-between mt-2 text-sm">
                 <span className="flex items-center">
                   <FaRupeeSign className="mr-1" /> 0
                 </span>
@@ -85,14 +90,14 @@ function App() {
             </div>
 
             {/* Loan Amount */}
-            <div className="w-[40vw] border-2 p-4 rounded">
+            <div className="w-full md:w-[40vw] border-2 p-4 rounded shadow-lg bg-white transition-all duration-300 ease-in-out hover:shadow-2xl">
               <h3 className="font-semibold mb-2">Loan Amount</h3>
               <h1 className="flex items-center text-xl font-medium mb-2">
                 <FaRupeeSign className="mr-1" />
                 {data.homeValue - data.downPayment}
               </h1>
               <input
-                className="w-full"
+                className="w-full transition duration-300"
                 type="range"
                 min={0}
                 max={data.homeValue}
@@ -101,7 +106,7 @@ function App() {
                   setData({ ...data, loanAmount: Number(e.target.value) })
                 }
               />
-              <div className="flex justify-between mt-2">
+              <div className="flex justify-between mt-2 text-sm">
                 <span className="flex items-center">
                   <FaRupeeSign className="mr-1" /> 0
                 </span>
@@ -112,13 +117,13 @@ function App() {
             </div>
 
             {/* Interest Rate */}
-            <div className="w-[40vw] border-2 p-4 rounded">
+            <div className="w-full md:w-[40vw] border-2 p-4 rounded shadow-lg bg-white transition-all duration-300 ease-in-out hover:shadow-2xl">
               <h3 className="font-semibold mb-2">Interest Rate (%)</h3>
-              <h1 className="flex items-center text-xl font-medium mb-2">
+              <h1 className="text-xl font-medium mb-2">
                 {data.interestRate}%
               </h1>
               <input
-                className="w-full"
+                className="w-full transition duration-300"
                 type="range"
                 min={1}
                 max={15}
@@ -128,23 +133,22 @@ function App() {
                   setData({ ...data, interestRate: Number(e.target.value) })
                 }
               />
-              <div className="flex justify-between mt-2">
+              <div className="flex justify-between mt-2 text-sm">
                 <span>1%</span>
                 <span>15%</span>
               </div>
             </div>
 
-            <div className="w-[40vw] rounded">
+            {/* Tenure Dropdown */}
+            <div className="w-full md:w-[40vw] rounded shadow-lg bg-white transition-all duration-300 ease-in-out hover:shadow-2xl">
               <select
-                name=""
-                id=""
-                className="w-full p-4 border-2 rounded"
+                className="w-full p-4 border-2 rounded text-base"
                 onChange={(e) =>
                   setData({ ...data, tenure: Number(e.target.value) })
                 }
                 value={data.tenure}
               >
-                <option value="1">1 Years</option>
+                <option value="1">1 Year</option>
                 <option value="2">2 Years</option>
                 <option value="3">3 Years</option>
                 <option value="4">4 Years</option>
@@ -154,10 +158,15 @@ function App() {
           </div>
         </div>
 
-        <div className="pl-20 pt-20 flex items-center h-[30vh] w-[50vw] justify-center text-4xl">
-          <span>Monthly EMI</span>
-          <FaRupeeSign className="mr-1" />
-          {monthlyPayment}
+        {/* Monthly EMI Output */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="bg-white rounded shadow-lg p-8 w-full md:w-[50vw] text-center transition-all duration-300 ease-in-out hover:shadow-2xl">
+            <span className="text-xl md:text-3xl font-semibold block mb-2">Monthly EMI</span>
+            <div className="text-3xl md:text-5xl font-bold flex justify-center items-center gap-2">
+              <FaRupeeSign />
+              {monthlyPayment}
+            </div>
+          </div>
         </div>
       </div>
     </div>
